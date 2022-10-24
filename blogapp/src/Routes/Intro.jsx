@@ -9,12 +9,15 @@ import {
 } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
 
 function Intro() {
+  const [active, setAvtive] = useState(true);
+
   return (
     <Box
       sx={{
@@ -23,7 +26,6 @@ function Intro() {
         color: "whitesmoke",
         paddingBottom: "50px",
         paddingTop: "50px",
-        // borderRadius: "0px 0px 50px 50px",
       }}
     >
       <Container>
@@ -40,20 +42,37 @@ function Intro() {
         </ThemeProvider>
       </Container>
       <Container>
-        <Link to={"/signup"}>
-          <Button
-            size="large"
-            style={{
-              backgroundColor: "black",
-              color: "white",
-              borderColor: "black",
-              borderRadius: "50px",
-            }}
-            variant="outlined"
-          >
-            Get started
-          </Button>
-        </Link>
+        {active ? (
+          <Link to={"/addblog"}>
+            <Button
+              size="large"
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                borderColor: "black",
+                borderRadius: "50px",
+              }}
+              variant="outlined"
+            >
+              Get started
+            </Button>
+          </Link>
+        ) : (
+          <Link to={"/signup"}>
+            <Button
+              size="large"
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                borderColor: "black",
+                borderRadius: "50px",
+              }}
+              variant="outlined"
+            >
+              Get started
+            </Button>
+          </Link>
+        )}
       </Container>
     </Box>
   );

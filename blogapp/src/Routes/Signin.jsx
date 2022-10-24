@@ -1,6 +1,6 @@
 import { Box, Container, Grid, TextField } from "@mui/material";
 import React from "react";
-import LoginForm from "./LoginForm";
+import LoginForm from "../components/LoginForm";
 
 function Signin() {
   return (

@@ -3,7 +3,7 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button, FormControl, TextField } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import SendIcon from "@mui/icons-material/Send";
 import { Container } from "@mui/system";
 
 function AddBlog() {
@@ -33,10 +33,11 @@ function AddBlog() {
         onChange={setValue}
       />
       <Button
-        style={{ color: "black", borderColor: "black", margin: "10px" }}
-        variant="outlined"
+        sx={{ margin: "10px", float: "right" }}
+        variant="contained"
+        endIcon={<SendIcon />}
       >
-        {<AddIcon />} Add
+        Send
       </Button>
     </Container>
   );
