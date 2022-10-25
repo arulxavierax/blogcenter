@@ -37,7 +37,7 @@ function AddBlog() {
         label="Add Image URL"
         id="Outlined"
         variant="outlined"
-        sx={{ width: "100%", marginTop: "50px", mb: "10px" }}
+        sx={{ width: "100%", marginTop: "20px", mb: "10px" }}
       />
       <TextField
         onChange={handleChange}
@@ -62,7 +62,7 @@ function AddBlog() {
         onChange={setValue}
       />
       <Button
-        sx={{ margin: "10px", float: "right" }}
+        sx={{ margin: "10px", marginBottom: "20px" }}
         variant="contained"
         onClick={handleSubmit}
         endIcon={<SendIcon />}

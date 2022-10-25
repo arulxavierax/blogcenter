@@ -17,7 +17,7 @@ import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const StyledToolBar = styled(Toolbar)({
   width: "90%",
@@ -37,9 +37,12 @@ function Navbar({ setMode, mode }) {
   const [open, setOpen] = useState(false);
   const [sign, setSign] = useState(true);
 
+  const navigate = useNavigate();
+
   const handleSignout = () => {
     setSign(false);
     setOpen(false);
+    navigate("/");
   };
   // #33393d ,0b172a
   return (
