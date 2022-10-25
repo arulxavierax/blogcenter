@@ -15,6 +15,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -32,7 +33,7 @@ const Icons = styled(Box)(({ theme }) => ({
   cursor: "pointer",
 }));
 
-function Navbar() {
+function Navbar({ setMode, mode }) {
   const [open, setOpen] = useState(false);
   const [sign, setSign] = useState(true);
 
@@ -58,6 +59,10 @@ function Navbar() {
         </Link>
         {sign ? (
           <Icons>
+            <DarkModeIcon
+              fontSize="large"
+              onClick={() => setMode(mode === "light" ? "dark" : "light")}
+            />
             <Link to={"/addblog"}>
               <AddCircleOutlinedIcon fontSize="large"></AddCircleOutlinedIcon>
             </Link>
@@ -68,6 +73,7 @@ function Navbar() {
           </Icons>
         ) : (
           <Icons>
+            {/* <DarkModeIcon fontSize="large"/> */}
             <Link to={"/signin"}>
               <Button
                 sx={{ display: { xs: "none", sm: "block" } }}

@@ -8,22 +8,51 @@ import { Container } from "@mui/system";
 
 function AddBlog() {
   const [value, setValue] = useState("");
+  const [data, setData] = useState({
+    imageurl: "",
+    heading: "",
+    summary: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, type, value } = e.target;
+    const val = value;
+    setData({
+      ...value,
+      ...data,
+      [name]: val,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(data);
+  };
 
   return (
     <Container>
       <TextField
+        onChange={handleChange}
+        name="imageurl"
         label="Add Image URL"
-        id="outlined-start-adornment"
+        id="Outlined"
+        variant="outlined"
         sx={{ width: "100%", marginTop: "50px", mb: "10px" }}
       />
       <TextField
-        label="Add Summary"
+        onChange={handleChange}
+        name="heading"
+        label="Add a heading"
         id="outlined-start-adornment"
+        variant="outlined"
         sx={{ width: "100%", mb: "10px" }}
       />
       <TextField
-        label="Add a heading"
+        onChange={handleChange}
+        name="summary"
+        label="Add Summary"
         id="outlined-start-adornment"
+        variant="outlined"
         sx={{ width: "100%", mb: "10px" }}
       />
       <ReactQuill
@@ -35,6 +64,7 @@ function AddBlog() {
       <Button
         sx={{ margin: "10px", float: "right" }}
         variant="contained"
+        onClick={handleSubmit}
         endIcon={<SendIcon />}
       >
         Send

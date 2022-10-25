@@ -8,12 +8,31 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
 function LoginForm() {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, type, value } = e.target;
+    const val = value;
+    setForm({
+      ...form,
+      [name]: val,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(form);
+  };
+
   return (
     <div
       style={{
@@ -35,12 +54,16 @@ function LoginForm() {
       </ThemeProvider>
       <FormControl>
         <TextField
+          onChange={handleChange}
+          name="email"
           label="Email"
           id="outlined-start-adornment"
           sx={{ m: 2, width: "30ch" }}
           size="Normal"
         />
         <TextField
+          onChange={handleChange}
+          name="password"
           type={"password"}
           label="Password"
           id="outlined-start-adornment"
@@ -50,7 +73,9 @@ function LoginForm() {
         <Typography variant="p" color={"blue"} mb={5} textAlign={"right"}>
           Forgot password?
         </Typography>
-        <Button variant="contained">Submit</Button>
+        <Button variant="contained" onClick={handleSubmit}>
+          Submit
+        </Button>
       </FormControl>
       <Typography
         display={"flex"}

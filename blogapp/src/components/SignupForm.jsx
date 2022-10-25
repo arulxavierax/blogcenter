@@ -12,12 +12,34 @@ import React from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Box } from "@mui/system";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
 function SignupForm() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, type, value } = e.target;
+    const val = value;
+    setForm({
+      ...form,
+      [name]: val,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(form);
+  };
+
   return (
-    <div
+    <Box
       style={{
         boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
         padding: "20px",
@@ -37,16 +59,28 @@ function SignupForm() {
       </ThemeProvider>
       <FormControl>
         <TextField
-          label="Email"
+          onChange={handleChange}
+          name="name"
+          label="Full Name"
           id="outlined-start-adornment"
-          sx={{ m: 2, width: "30ch" }}
+          sx={{ m: 0.5, mt: 3, width: "30ch" }}
           size="Normal"
         />
         <TextField
+          onChange={handleChange}
+          name="email"
+          label="Email"
+          id="outlined-start-adornment"
+          sx={{ m: 0.5, width: "30ch" }}
+          size="Normal"
+        />
+        <TextField
+          onChange={handleChange}
+          name="password"
           type={"password"}
           label="Password"
           id="outlined-start-adornment"
-          sx={{ m: 2, width: "30ch" }}
+          sx={{ m: 0.5, width: "30ch" }}
           size="Normal"
         />
         <Button
@@ -54,7 +88,7 @@ function SignupForm() {
           size="large"
           variant="outlined"
           sx={{
-            margin: "10px",
+            margin: "5px",
             color: "black",
             borderColor: "black",
             borderRadius: "50px",
@@ -67,7 +101,7 @@ function SignupForm() {
           size="large"
           variant="outlined"
           sx={{
-            margin: "10px",
+            margin: "5px",
             color: "black",
             borderColor: "black",
             borderRadius: "50px",
@@ -75,7 +109,12 @@ function SignupForm() {
         >
           Sign up with Facebook
         </Button>
-        <Button size="large" sx={{ margin: "10px" }} variant="contained">
+        <Button
+          onClick={handleSubmit}
+          size="large"
+          sx={{ margin: "10px" }}
+          variant="contained"
+        >
           Submit
         </Button>
       </FormControl>
@@ -89,19 +128,19 @@ function SignupForm() {
       >
         Already have an account?
         <Link to="/signin">
-        <Typography
-          sx={{ cursor: "pointer" }}
-          variant="p"
-          component="p"
-          textAlign={"center"}
-          display={"flex"}
-          color="green"
-        >
-          Sign in
-        </Typography>
+          <Typography
+            sx={{ cursor: "pointer" }}
+            variant="p"
+            component="p"
+            textAlign={"center"}
+            display={"flex"}
+            color="green"
+          >
+            Sign in
+          </Typography>
         </Link>
       </Typography>
-    </div>
+    </Box>
   );
 }
 
