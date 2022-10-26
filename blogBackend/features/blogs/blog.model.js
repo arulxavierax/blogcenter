@@ -1,11 +1,12 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, default: mongoose } = require("mongoose");
 
 const blogSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: "user",
+    required: true,
   },
-  imageUrl: { type: URL },
+  imageUrl: { type: String },
   heading: { type: String, required: true },
   summary: { type: String },
   desc: { type: String, required: true },
