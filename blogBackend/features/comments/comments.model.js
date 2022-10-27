@@ -1,12 +1,12 @@
 const { Schema, model, default: mongoose } = require("mongoose");
 
 const commentSchema = new Schema({
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: true,
   },
-  blog: {
+  blogId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "blog",
     required: true,
