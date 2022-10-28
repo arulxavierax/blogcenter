@@ -94,7 +94,7 @@ function SignupForm() {
             borderRadius: "50px",
           }}
         >
-          Sign up with Google
+          <a href="http://localhost:8080/auth/google">Sign in with Google</a>
         </Button>
         <Button
           startIcon={<FacebookIcon />}
