@@ -1,5 +1,6 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 const User = require("../users/users.model");
 const Otp = require("./reset-password.model");
 
@@ -11,7 +12,7 @@ const transport = nodemailer.createTransport({
   secure: true,
   auth: {
     user: "blogcenterc@gmail.com",
-    pass: "gxjhfhmscjzqfpok",
+    pass: process.env.GMAIL_PASS,
   },
 });
 
@@ -19,7 +20,6 @@ app.post("/getotp", async (req, res) => {
   const { email } = req.body;
   const otp = Math.floor(Math.random() * 100000);
   const otps = await Otp.create({ email, otp });
-  //BlogCenter@1234
   transport
     .sendMail({
       to: email,
