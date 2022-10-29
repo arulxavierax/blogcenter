@@ -1,11 +1,11 @@
 import React from "react";
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 function PrivateRoute({ children }) {
-  const { isAuth } = useContext();
+  const isAuth = useSelector((store) => store.auth.token);
   if (!isAuth) {
-    return <Navigate to={"/login"} />;
+    return <Navigate to={"/signin"} />;
   }
   return children;
 }

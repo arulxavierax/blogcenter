@@ -11,13 +11,20 @@ import {
 import React from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Box } from "@mui/system";
+import { useDispatch, useSelector } from "react-redux";
+import { googleSignupApi, signupApi } from "../store/auth/auth.action";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
+
 function SignupForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isAuth = useSelector((store) => store.auth.token);
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -33,10 +40,19 @@ function SignupForm() {
     });
   };
 
+  // const googleSigup = () => {
+  //   dispatch(googleSignupApi());
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(signupApi(form));
     console.log(form);
   };
+
+  if (isAuth) {
+    navigate("/");
+  }
 
   return (
     <Box
@@ -93,6 +109,7 @@ function SignupForm() {
             borderColor: "black",
             borderRadius: "50px",
           }}
+          // onClick={googleSigup}
         >
           <a href="http://localhost:8080/auth/google">Sign in with Google</a>
         </Button>

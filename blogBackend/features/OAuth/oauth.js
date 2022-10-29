@@ -30,7 +30,7 @@ app.get(
       "REFRESH^&*()",
       { expiresIn: "30 days" }
     );
-    // res.redirect("http://localhost:3000");
+    res.redirect("http://localhost:3000");
     res.send({
       message: "Signin successfull",
       token,

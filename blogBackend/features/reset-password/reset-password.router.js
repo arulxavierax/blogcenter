@@ -29,8 +29,8 @@ app.post("/getotp", async (req, res) => {
     })
     .then(() => {
       console.log("Otp sent");
+      res.send("otp sent");
     });
-  res.send("otp sent");
 });
 
 app.post("/verify", async (req, res) => {

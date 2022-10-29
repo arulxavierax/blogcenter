@@ -9,11 +9,17 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { signinApi } from "../store/auth/auth.action";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
+
 function LoginForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isAuth = useSelector((store) => store.auth.token);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -28,10 +34,15 @@ function LoginForm() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    // e.preventDefault();
+    dispatch(signinApi(form));
     console.log(form);
   };
+
+  if (isAuth) {
+    navigate("/");
+  }
 
   return (
     <div
@@ -71,7 +82,7 @@ function LoginForm() {
           size="Normal"
         />
         <Typography variant="p" color={"blue"} mb={5} textAlign={"right"}>
-          Forgot password?
+          <Link to="/forget-password">Forgot password?</Link>
         </Typography>
         <Button variant="contained" onClick={handleSubmit}>
           Submit

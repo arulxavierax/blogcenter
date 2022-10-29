@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const userRouter = require("./features/users/users.routes");
 const blogRouter = require("./features/blogs/blog.router");
 const commentRouter = require("./features/comments/comment.router");
@@ -7,6 +8,7 @@ const resetpasswordRouter = require("./features/reset-password/reset-password.ro
 const dbConnect = require("./config/db");
 
 const app = express();
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

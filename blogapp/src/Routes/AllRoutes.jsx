@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import ForgetForm from "../components/ForgetForm";
+import PrivateRoute from "../hoc/PrivateRoute";
 import AddBlog from "./AddBlog";
 import Blog from "./Blog";
 import HomePage from "./HomePage";
@@ -12,8 +14,23 @@ function AllRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/addblog" element={<AddBlog />} />
-      <Route path="/blog/:id" element={<Blog />} />
+      <Route path="/forget-password" element={<ForgetForm />} />
+      <Route
+        path="/addblog"
+        element={
+          <PrivateRoute>
+            <AddBlog />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/blog/:id"
+        element={
+          <PrivateRoute>
+            <Blog />
+          </PrivateRoute>
+        }
+      />
     </Routes>
   );
 }

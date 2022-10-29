@@ -17,7 +17,9 @@ import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { logoutApi } from "../store/auth/auth.action";
 
 const StyledToolBar = styled(Toolbar)({
   width: "90%",
@@ -34,14 +36,15 @@ const Icons = styled(Box)(({ theme }) => ({
 }));
 
 function Navbar({ setMode, mode }) {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [sign, setSign] = useState(true);
 
+  const isAuth = useSelector((store) => store.auth.sign);
   const navigate = useNavigate();
 
   const handleSignout = () => {
-    setSign(false);
     setOpen(false);
+    dispatch(logoutApi());
     navigate("/");
   };
   // #33393d ,0b172a
@@ -60,7 +63,7 @@ function Navbar({ setMode, mode }) {
           </Typography>
           <EmojiObjectsIcon sx={{ display: { xs: "block", sm: "none" } }} />
         </Link>
-        {sign ? (
+        {isAuth ? (
           <Icons>
             <DarkModeIcon
               fontSize="large"

@@ -17,7 +17,7 @@ let theme = createTheme();
 theme = responsiveFontSizes(theme);
 
 function HomePage() {
-  const [active, setAvtive] = useState(true);
+  const [active, setActive] = useState(true);
 
   return (
     <Box>
