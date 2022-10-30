@@ -16,7 +16,7 @@ const authMiddileware = async (req, res, next) => {
 };
 
 const app = express.Router();
-app.use(authMiddileware);
+// app.use(authMiddileware);
 
 app.get("/", async (req, res) => {
   let blogs = await Blog.find();
@@ -30,7 +30,7 @@ app.get("/:id", async (req, res) => {
   res.send({ blog, author });
 });
 
-app.delete("/:id", async (req, res) => {
+app.delete("/:id", authMiddileware, async (req, res) => {
   let { id } = req.params;
   const token = req.headers.authorization;
   const blog = await Blog.findById(id);
@@ -47,7 +47,7 @@ app.delete("/:id", async (req, res) => {
   }
 });
 
-app.patch("/:id", async (req, res) => {
+app.patch("/:id", authMiddileware, async (req, res) => {
   let { id } = req.params;
   let content = req.body;
   const token = req.headers.authorization;
@@ -68,15 +68,21 @@ app.patch("/:id", async (req, res) => {
   }
 });
 
-app.post("/add", async (req, res) => {
-  const { heading, summary, desc } = req.body;
+app.post("/add", authMiddileware, async (req, res) => {
+  const { imageUrl, heading, summary, desc } = req.body;
+  let date = new Date();
+  let dateMDY = `${date.getDate()}/${
+    date.getMonth() + 1
+  }/${date.getFullYear()}`;
+
   try {
     const newBlog = await Blog.create({
       userId: req.userId,
+      imageUrl,
       heading,
       summary,
       desc,
-      date: Date.now(),
+      date: dateMDY,
     });
     res.send("Blog Created");
   } catch (e) {

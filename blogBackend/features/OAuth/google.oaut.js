@@ -14,12 +14,17 @@ passport.use(
     async function (accessToken, refreshToken, profile, cb) {
       let name = profile.displayName;
       let email = profile._json.email;
-      let user = await User.create({
-        name,
-        email,
-        password: v4(),
-      });
-      return cb(null, user);
+      let existUser = await User.findOne({ name, email });
+      if (existUser) {
+        return cb(null, existUser);
+      } else {
+        let user = await User.create({
+          name,
+          email,
+          password: v4(),
+        });
+        return cb(null, user);
+      }
     }
   )
 );

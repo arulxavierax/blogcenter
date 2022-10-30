@@ -39,13 +39,15 @@ function Navbar({ setMode, mode }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
-  const isAuth = useSelector((store) => store.auth.sign);
+  const isAuth = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
 
   const handleSignout = () => {
-    setOpen(false);
     dispatch(logoutApi());
-    navigate("/");
+    setOpen(false);
+    setMode("light");
+    localStorage.removeItem("token");
+    navigate("/signin");
   };
   // #33393d ,0b172a
   return (

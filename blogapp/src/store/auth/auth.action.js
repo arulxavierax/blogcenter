@@ -2,6 +2,7 @@ import axios from "axios";
 import axiosInstance from "../../utils/axios.instance";
 import {
   AUTH_LOGOUT_ERROR,
+  AUTH_LOGOUT_SUCCESS,
   AUTH_SIGNIN_ERROR,
   AUTH_SIGNIN_LOADING,
   AUTH_SIGNIN_SUCCESS,
@@ -11,6 +12,15 @@ import {
   AUTH_SIGNUP_SUCCESS,
 } from "./auth.types";
 
+let token = JSON.parse(localStorage.getItem("token"));
+let refreshToken = JSON.parse(localStorage.getItem("refreshtoken"));
+const config = {
+  headers: {
+    authorization: token,
+    refreshToken: refreshToken,
+  },
+};
+
 export const signinApi = (creds) => async (dispatch) => {
   dispatch({ type: AUTH_SIGNIN_LOADING });
   try {
@@ -18,9 +28,10 @@ export const signinApi = (creds) => async (dispatch) => {
       "http://localhost:8080/users/signin",
       creds
     );
+    console.log(response.data);
     dispatch({ type: AUTH_SIGNIN_SUCCESS, payload: response.data });
   } catch (e) {
-    console.log(e.message);
+    console.log(e);
     dispatch({ type: AUTH_SIGNIN_ERROR, payload: e.message });
   }
 };
@@ -51,7 +62,11 @@ export const signupApi = (creds) => async (dispatch) => {
 
 export const logoutApi = () => async (dispatch) => {
   try {
-    let response = await axiosInstance.post("/users/logout");
+    let response = await axios.post(
+      "http://localhost:8080/users/logout",
+      config
+    );
+    dispatch({ type: AUTH_LOGOUT_SUCCESS });
   } catch (e) {
     console.log(e.message);
     dispatch({ type: AUTH_LOGOUT_ERROR, payload: e.message });
