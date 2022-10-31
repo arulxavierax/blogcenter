@@ -1,4 +1,11 @@
-import { Divider } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Backdrop,
+  Button,
+  CircularProgress,
+  Divider,
+} from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import React from "react";
 import { useEffect } from "react";
@@ -18,11 +25,26 @@ function Blog() {
   }, [id]);
 
   if (loading) {
-    return <h1>Loading ...</h1>;
+    return (
+      <>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={true}
+        >
+          <CircularProgress disableShrink />
+          {/* <CircularProgress color="inherit" /> */}
+        </Backdrop>
+      </>
+    );
   }
 
   if (error) {
-    return <h1>Something went wrong !</h1>;
+    return (
+      <Alert severity="error" sx={{ p: 10, margin: 10 }}>
+        <AlertTitle>Error</AlertTitle>
+        Something went wrong — <strong>check it out!</strong>
+      </Alert>
+    );
   }
 
   return (

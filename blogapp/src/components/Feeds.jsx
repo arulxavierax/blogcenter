@@ -5,8 +5,16 @@ import { useEffect } from "react";
 import { getBlogApi } from "../store/blogs/blog.action";
 import { ThemeProvider } from "@emotion/react";
 import {
+  Alert,
+  AlertTitle,
   Avatar,
+  Backdrop,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
   Chip,
+  CircularProgress,
   Container,
   createTheme,
   Divider,
@@ -27,11 +35,26 @@ function Feeds() {
   }, []);
 
   if (loading) {
-    return <h3>Loading ...</h3>;
+    return (
+      <>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={true}
+        >
+          <CircularProgress disableShrink />
+          {/* <CircularProgress color="inherit" /> */}
+        </Backdrop>
+      </>
+    );
   }
 
   if (error) {
-    return <h3>Something went wrong !</h3>;
+    return (
+      <Alert severity="error" sx={{ p: 10, margin: 10 }}>
+        <AlertTitle>Error</AlertTitle>
+        Something went wrong — <strong>check it out!</strong>
+      </Alert>
+    );
   }
 
   return (
@@ -39,24 +62,26 @@ function Feeds() {
       {data.map((el) => (
         <Box key={el._id}>
           <Link to={`/blog/${el._id}`}>
-            <Stack
-              mt={10}
-              direction={"row"}
-              spacing={10}
-              justifyContent="space-between"
-            >
-              <Container sx={{ display: "flex" }}>
-                <Container>
-                  <ThemeProvider theme={theme}>
-                    <Typography variant="h4">{el.heading}</Typography>
-                    <Typography>{el.summary}</Typography>
-                  </ThemeProvider>
-                </Container>
-                <Container>
-                  <img width="50%" src={el.imageUrl} />
-                </Container>
-              </Container>
-            </Stack>
+            <Container sx={{ mt: 5 }}>
+              <Card sx={{ maxWidth: 600 }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={el.imageUrl}
+                    alt={el.heading}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {el.heading}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {el.summary}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Container>
             <Divider variant="inset" component="li" />
           </Link>
         </Box>
