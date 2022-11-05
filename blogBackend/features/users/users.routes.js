@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("./users.model");
 const app = express.Router();
+const { redis } = require("../../config/db");
 
 var blackList = [];
 
@@ -27,6 +28,7 @@ app.post("/signup", async (req, res) => {
       "REFRESH^&*()",
       { expiresIn: "30 days" }
     );
+    const tokens = redis.mset({ token: token, refreshtoken: refreshToken });
     res.send({
       message: "Signup successfull",
       token,
@@ -51,6 +53,7 @@ app.post("/signin", async (req, res) => {
     "REFRESH^&*()",
     { expiresIn: "30 days" }
   );
+  redis.mset({ token: token, refreshtoken: refreshToken });
   res.send({
     message: "Signin successfull",
     token,
@@ -74,6 +77,7 @@ app.get("/:id", async (req, res) => {
   } catch (e) {
     if (e.message === "jwt expired") {
       blackList.push(token);
+      redis.set("blacklist", token);
     }
     return res.status(500).send(e.message);
   }
@@ -82,6 +86,7 @@ app.get("/:id", async (req, res) => {
 app.post("/logout", (req, res) => {
   const token = req.headers.authorization;
   const refreshToken = req.headers["refreshtoken"];
+  redis.mset("blacklist", token, refreshToken);
   blackList.push(token);
   blackList.push(refreshToken);
   res.send("Logged out");
@@ -103,6 +108,7 @@ app.post("/refresh", (req, res) => {
       "SECRETKEY!@#$%",
       { expiresIn: "7 days" }
     );
+    const tokens = redis.set({ token: mainToken });
     return res.send({ token: mainToken });
   } catch (e) {
     if (e.message === "jwt expired") {

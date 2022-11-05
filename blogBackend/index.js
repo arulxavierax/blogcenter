@@ -5,7 +5,7 @@ const blogRouter = require("./features/blogs/blog.router");
 const commentRouter = require("./features/comments/comment.router");
 const oauthRouter = require("./features/OAuth/oauth");
 const resetpasswordRouter = require("./features/reset-password/reset-password.router");
-const dbConnect = require("./config/db");
+const {dbConnect} = require("./config/db");
 
 const app = express();
 app.use(cors());
